@@ -1,1 +1,1 @@
-exports.default = { plugin: [[require('./index').default, 'night']] };
+exports.default = { plugin: [require('./index').default] };
