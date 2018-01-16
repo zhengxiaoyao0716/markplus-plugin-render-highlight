@@ -1,5 +1,5 @@
 # markplus-plugin-render-highlight
-## Render codes with [highlightjs](https://github.com/isagalaev/highlight.js).
+## Render codes with [highlightjs](https://github.com/isagalaev/highlight.js) for [markplus](https://github.com/zhengxiaoyao0716/markplus).
 
 ***
 ## Setup
