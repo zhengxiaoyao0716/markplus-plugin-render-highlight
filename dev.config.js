@@ -1,1 +1,1 @@
-exports.default = { plugin: [require('./index').default] };
+exports.default = { plugin: [require('./index').default, 'render-catalog'] };

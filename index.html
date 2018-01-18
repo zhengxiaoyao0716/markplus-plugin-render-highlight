@@ -1,8 +1,8 @@
-<!-- Markplus: MarkplusPluginRenderHighlight -->
+<!-- Markplus: markplusPluginRenderHighlight -->
 <style>
 .Markplus {
     font-family: arial,tahoma,'Microsoft Yahei','\5b8b\4f53',sans-serif;
-    margin: 20px;
+    padding: 45px;
     line-height: 1.5;
 }
 .Markplus .Target {
@@ -13,22 +13,28 @@
     font-weight: bold;
     padding-bottom: 6px;
 }
-.Markplus .Header:hover::before {
+.Markplus .Header>.hash {
+    position: relative;
+    padding: 0 12px;
+    margin-left: -24px;
+}
+.Markplus .Header:hover>.hash::before {
+    position: absolute;
+    left: 0;
     color: #888;
     content: "\00B6";
-    margin-left: -6px;
-    margin-right: 3px;
     cursor: pointer;
 }
 .Markplus .Header.Header-1 {
-    border-bottom: 2px solid #eee;
-    font-size: 1.5em;
+    border-bottom: 0.1em solid #eee;
+    font-size: 2em;
 }
 .Markplus .Header.Header-2 {
-    font-size: 1.3em;
+    border-bottom: 0.05em solid #eee;
+    font-size: 1.5em;
 }
 .Markplus .Header.Header-3 {
-    font-size: 1.2em;
+    font-size: 1.25em;
 }
 .Markplus .Header.Header-4 {
     font-size: 1.1em;
@@ -38,13 +44,19 @@
 }
 
 .Markplus .Divider {
-    border-top: 1px solid #eee;
+    border-top: 0.25em solid #eee;
+}
+.Markplus .Divider.Divider-dashed {
+    border-top-style: dashed;
 }
 .Markplus .Block, .Markplus .Block>Block {
     display: block;
     position: relative;
-    border-left: 3px solid #eee;
-    padding-left: 12px;
+    border-left: 0.25em solid #eee;
+    padding: 0 1em;
+}
+.Markplus .Block:not(.Block-nested) {
+    margin-bottom: 6px;
 }
 .Markplus .Code {
     overflow-x: auto;
@@ -54,8 +66,83 @@
     background: #eee;
 }
 
+.Markplus a {
+    color: #0366d6;
+    text-decoration: none;
+}
+.Markplus a:hover {
+    text-decoration: underline;
+}
+.Markplus code {
+    padding: 0.2em 0.4em;
+    margin: 0;
+    font-size: 85%;
+    background-color: rgba(27,31,35,0.05);
+    border-radius: 3px;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+
 </style>
-<style>/* https://highlightjs.org/static/demo/styles/vs2015.css */.Markplus .Code.hljs{display:block;overflow-x:auto;background:#1E1E1E;color:#DCDCDC}.hljs-keyword,.hljs-literal,.hljs-symbol,.hljs-name{color:#569CD6}.hljs-link{color:#569CD6;text-decoration:underline}.hljs-built_in,.hljs-type{color:#4EC9B0}.hljs-number,.hljs-class{color:#B8D7A3}.hljs-string,.hljs-meta-string{color:#D69D85}.hljs-regexp,.hljs-template-tag{color:#9A5334}.hljs-subst,.hljs-function,.hljs-title,.hljs-params,.hljs-formula{color:#DCDCDC}.hljs-comment,.hljs-quote{color:#57A64A;font-style:italic}.hljs-doctag{color:#608B4E}.hljs-meta,.hljs-meta-keyword,.hljs-tag{color:#9B9B9B}.hljs-variable,.hljs-template-variable{color:#BD63C5}.hljs-attr,.hljs-attribute,.hljs-builtin-name{color:#9CDCFE}.hljs-section{color:gold}.hljs-emphasis{font-style:italic}.hljs-strong{font-weight:bold}.hljs-bullet,.hljs-selector-tag,.hljs-selector-id,.hljs-selector-class,.hljs-selector-attr,.hljs-selector-pseudo{color:#D7BA7D}.hljs-addition{background-color:#144212;display:inline-block;width:100%}.hljs-deletion{background-color:#600;display:inline-block;width:100%}</style>
+<style>.Markplus{overflow:hidden;} .Markplus .Code{padding:0;}.hljs{display:block;overflow-x:auto;padding:16px;}.Markplus .Code{background:#1E1E1E;}/* https://highlightjs.org/static/demo/styles/vs2015.css */.hljs{background:#1E1E1E;color:#DCDCDC}.hljs-keyword,.hljs-literal,.hljs-symbol,.hljs-name{color:#569CD6}.hljs-link{color:#569CD6;text-decoration:underline}.hljs-built_in,.hljs-type{color:#4EC9B0}.hljs-number,.hljs-class{color:#B8D7A3}.hljs-string,.hljs-meta-string{color:#D69D85}.hljs-regexp,.hljs-template-tag{color:#9A5334}.hljs-subst,.hljs-function,.hljs-title,.hljs-params,.hljs-formula{color:#DCDCDC}.hljs-comment,.hljs-quote{color:#57A64A;font-style:italic}.hljs-doctag{color:#608B4E}.hljs-meta,.hljs-meta-keyword,.hljs-tag{color:#9B9B9B}.hljs-variable,.hljs-template-variable{color:#BD63C5}.hljs-attr,.hljs-attribute,.hljs-builtin-name{color:#9CDCFE}.hljs-section{color:gold}.hljs-emphasis{font-style:italic}.hljs-strong{font-weight:bold}.hljs-bullet,.hljs-selector-tag,.hljs-selector-id,.hljs-selector-class,.hljs-selector-attr,.hljs-selector-pseudo{color:#D7BA7D}.hljs-addition{background-color:#144212;display:inline-block;width:100%}.hljs-deletion{background-color:#600;display:inline-block;width:100%}</style>
+<style>
+    .Markplus-catalog {
+        position: relative;
+        margin-right: 10px;
+        transition: margin-right 0.5s;
+    }
+    .Markplus-catalog.fold {
+        margin-right: 50px;
+    }
+
+    .Markplus-catalog>a.fold {
+        position: absolute;
+        top: 0;
+        z-index: 1;
+        right: 10px;
+        margin-top: 10px;
+        cursor: pointer;
+        color: #fff;
+        transition: top 0.5s, color 0.5s 0.5s;
+    }
+    .Markplus-catalog.fold>a.fold {
+        color: unset;
+        left: 10px;
+    }
+    .Markplus-catalog>a.fold::before {
+        content: "◥";
+    }
+
+    .Markplus-catalog>.Tabel {
+        position: relative;
+        top: 0;
+        background: #6cf;
+        width: 30vw;
+        transition: top 0.5s, width 0.5s;
+        overflow: hidden;
+        color: #fff;
+    }
+    .Markplus-catalog.fold>.Tabel {
+        width: 0vw;
+    }
+
+    .Markplus-catalog>.Tabel>* {
+        display: block;
+        margin: 10px 30px 10px 12px;
+        padding-left: 8px;
+    }
+    .Markplus-catalog>.Tabel span.tab:not(:hover) {
+        color: #9ff;
+    }
+    .Markplus-catalog>.Tabel span.tab:hover {
+        border-left: 3px solid #fff;
+        padding-left: 5px;
+    }
+    .Markplus-catalog>.Tabel span.tab-1 { text-decoration: underline; font-weight: bold; margin-top: 30px; margin-bottom: 20px; }
+    .Markplus-catalog>.Tabel span.tab-2 { margin-left: 12px; }
+    .Markplus-catalog>.Tabel span.tab-3 { margin-left: 22px; }
+    .Markplus-catalog>.Tabel span.tab-4 { margin-left: 32px; }
+    .Markplus-catalog>.Tabel span.tab-5 { margin-left: 42px; }
+</style><style id="markplusCatalogDynamicStyle"></style>
 <style>body { margin: 0; width: 100%; height: 100%; }</style>
 <script>
 (function (global, factory) {
@@ -68,7 +155,7 @@
             exports: {}
         };
         factory(mod.exports);
-        global.MarkplusPluginRenderHighlight = mod.exports;
+        global.markplusPluginRenderHighlight = mod.exports;
     }
 })(this, function (exports) {
     'use strict';
@@ -145,6 +232,17 @@
             ele.classList.add('String');
             return ele;
         }], [function (payload) {
+            return payload instanceof Array;
+        }, function (payload) {
+            var ele = document.createElement('span');
+            payload.filter(function (p) {
+                return p != null;
+            }).forEach(function (payload) {
+                return Markplus.register(payload.at, payload);
+            });
+            ele.classList.add('Array');
+            return ele;
+        }], [function (payload) {
             return payload instanceof Object && payload.tag;
         }, function (payload) {
             var tag = payload.tag,
@@ -165,6 +263,10 @@
         }]],
         decorators: [function (ele, at) {
             return ele.setAttribute('data-markplus-at', at);
+        }, function (ele) {
+            return ele.innerHTML = ele.innerHTML.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2">$1</a>');
+        }, function (ele) {
+            return ele.innerHTML = ele.innerHTML.replace(/`(.*?)`/g, '<code>$1</code>');
         }, function (ele, at) {
             return ele.id || (ele.id = 'L' + at);
         }],
@@ -188,7 +290,7 @@
     };
 
     Markplus.__defineGetter__('version', function () {
-        return '0.2.8';
+        return '0.2.10';
     });
 
     Markplus.renders.unshift([function (payload) {
@@ -202,29 +304,90 @@
         return ele;
     }]);
     Markplus.decorators.push(function (ele, _, payload) {
-        return ele.classList.contains('Header') && ele.addEventListener('click', function () {
+        return ele.classList.contains('Header') && (ele.innerHTML = '<span class="hash"></span>' + ele.innerHTML, ele.querySelector('.hash').addEventListener('click', function () {
             return location.hash = payload.id;
-        });
+        }));
     });
+    (function (container) {
+        container.classList.add('Markplus-catalog');
+        container.appendChild(function (span) {
+            return span.innerHTML = '<!-- markplus-plugin-render-catalog -->', span;
+        }(document.createElement('span')));
+
+        var foldButton = document.createElement('a');
+        container.appendChild(function (button) {
+            button.classList.add('fold');
+            button.addEventListener('click', function () {
+                return container.classList[container.classList.contains('fold') ? 'remove' : 'add']('fold');
+            });
+
+            return button;
+        }(foldButton));
+
+        var tabArea = document.createElement('div');
+        tabArea.classList.add('Tabel');
+        container.appendChild(tabArea);
+
+        window.addEventListener('load', function () {
+            return function (parent) {
+                parent.style.display = 'flex';
+                parent.insertBefore(container, Markplus.container);
+            }(Markplus.container.parentElement);
+        });
+
+        var dynamicStyle = document.querySelector('#markplusCatalogDynamicStyle');
+        ['load', 'hashchange'].forEach(function (event) {
+            return window.addEventListener(event, function () {
+                var firstTab = container.querySelector('.Tabel span.tab');
+                var hash = decodeURIComponent(location.hash || firstTab && firstTab.getAttribute('to'));
+                dynamicStyle.innerHTML = '.Markplus-catalog>.Tabel span.tab[to="' + hash + '"] { color: #fff; }';
+                var hashTag = Markplus.container.querySelector('.Header' + hash);
+                var styleTop = function styleTop() {
+                    return Math.min(hashTag.offsetTop - hashTag.offsetParent.offsetTop, container.clientHeight - tabArea.clientHeight);
+                };
+                hashTag && (tabArea.style.top = foldButton.style.top = styleTop() + 'px');
+            });
+        });
+
+        Markplus.catalog = /** @param {HTMLElement} ele */function (ele) {
+            if (!ele) {
+                return container;
+            }
+            var tab = document.createElement('span');
+            tab.innerText = ele.innerText;
+            tab.classList.add('tab');
+            tab.classList.add('tab-' + ele.getAttribute('data-markplus-header-level'));
+            tab.setAttribute('to', '#' + ele.id);
+            tab.addEventListener('click', function () {
+                return location.hash = ele.id;
+            });
+            tabArea.appendChild(tab);
+        };
+        Markplus.decorators.push(function (ele) {
+            return ele.classList.contains('Header') && Markplus.catalog(ele);
+        });
+
+        return container;
+    })(document.createElement('div'));
 
     /* dump */
 
-    var name = exports.name = 'MarkplusPluginRenderHighlight';
+    var name = exports.name = 'markplusPluginRenderHighlight';
     Markplus.register(0, { "tag": "span", "html": "<!-- https://github.com/zhengxiaoyao0716/markplus -->", "class": "Comments" });
-    Markplus.register(1, { "tag": "span", "id": "markplus-plugin-render-highlight", "html": "<span>markplus-plugin-render-highlight</span><br>", "class": "Header Header-1", "data-markplus-header-level": 1 });
-    Markplus.register(2, { "tag": "span", "id": "Render-codes-with-[highlightjs](https://github.com/isagalaev/highlight.js)-for-[markplus](https://github.com/zhengxiaoyao0716/markplus).", "html": "<span>Render codes with [highlightjs](https://github.com/isagalaev/highlight.js) for [markplus](https://github.com/zhengxiaoyao0716/markplus).</span><br>", "class": "Header Header-2", "data-markplus-header-level": 2 });
+    Markplus.register(1, { "tag": "span", "html": "<span>markplus-plugin-render-highlight</span><br>", "class": "Header Header-1", "data-markplus-header-level": 1, "id": "markplusPluginRenderHighlight" });
+    Markplus.register(2, { "tag": "span", "html": "<span>Render codes with [highlightjs](https://github.com/isagalaev/highlight.js) for [markplus](https://github.com/zhengxiaoyao0716/markplus).</span><br>", "class": "Header Header-2", "data-markplus-header-level": 2, "id": "renderCodesWithHighlightjsHttpsGithubComIsagalaevHighlightJsForMarkplusHttpsGithubComZhengxiaoyao0716Markplus" });
     Markplus.register(3, { "tag": "span", "html": "<br>", "class": "Plain" });
-    Markplus.register(4, { "tag": "span", "html": "<br>", "class": "Divider" });
-    Markplus.register(5, { "tag": "span", "id": "Setup", "html": "<span>Setup</span><br>", "class": "Header Header-2", "data-markplus-header-level": 2 });
-    Markplus.register(6, { "tag": "pre", "html": "npm i --<span class=\"hljs-built_in\">save</span>-<span class=\"hljs-built_in\">dev</span> markplus markplus-plugin-render-highlight", "class": "Code Code-bash hljs language-q" });
+    Markplus.register(4, { "tag": "span", "html": "<br>", "class": "Divider Divider-dashed" });
+    Markplus.register(5, { "tag": "span", "html": "<span>Setup</span><br>", "class": "Header Header-2", "data-markplus-header-level": 2, "id": "setup" });
+    Markplus.register(6, { "tag": "pre", "html": "<span class=\"hljs q\">npm i --<span class=\"hljs-built_in\">save</span>-<span class=\"hljs-built_in\">dev</span> markplus markplus-plugin-render-highlight</span>", "class": "Code Code-bash" });
     Markplus.register(9, { "tag": "span", "html": "<br>", "class": "Plain" });
-    Markplus.register(10, { "tag": "span", "html": "<br>", "class": "Divider" });
-    Markplus.register(11, { "tag": "span", "id": "Usage", "html": "<span>Usage</span><br>", "class": "Header Header-2", "data-markplus-header-level": 2 });
-    Markplus.register(12, { "tag": "span", "id": "Simple:", "html": "<span>Simple:</span><br>", "class": "Header Header-3", "data-markplus-header-level": 3 });
-    Markplus.register(13, { "tag": "pre", "html": "{ <span class=\"hljs-attr\">\"plugin\"</span>: [ <span class=\"hljs-string\">\"render-highlight\"</span> ] }", "class": "Code Code-json hljs language-json" });
+    Markplus.register(10, { "tag": "span", "html": "<br>", "class": "Divider Divider-dashed" });
+    Markplus.register(11, { "tag": "span", "html": "<span>Usage</span><br>", "class": "Header Header-2", "data-markplus-header-level": 2, "id": "usage" });
+    Markplus.register(12, { "tag": "span", "html": "<span>Simple:</span><br>", "class": "Header Header-3", "data-markplus-header-level": 3, "id": "simple" });
+    Markplus.register(13, { "tag": "pre", "html": "<span class=\"hljs json\">{ <span class=\"hljs-attr\">\"plugin\"</span>: [ <span class=\"hljs-string\">\"render-highlight\"</span> ] }</span>", "class": "Code Code-json" });
     Markplus.register(16, { "tag": "span", "html": "<br>", "class": "Plain" });
-    Markplus.register(17, { "tag": "span", "id": "Theme:", "html": "<span>Theme:</span><br>", "class": "Header Header-3", "data-markplus-header-level": 3 });
-    Markplus.register(18, { "tag": "pre", "html": "{\n    <span class=\"hljs-attr\">\"plugin\"</span>: [\n        [<span class=\"hljs-string\">\"render-highlight\"</span>, <span class=\"hljs-string\">\"THEME_NAME\"</span>]\n    ]\n}", "class": "Code Code-json hljs language-json" });
+    Markplus.register(17, { "tag": "span", "html": "<span>Theme:</span><br>", "class": "Header Header-3", "data-markplus-header-level": 3, "id": "theme" });
+    Markplus.register(18, { "tag": "pre", "html": "<span class=\"hljs json\">{\n    <span class=\"hljs-attr\">\"plugin\"</span>: [\n        [<span class=\"hljs-string\">\"render-highlight\"</span>, <span class=\"hljs-string\">\"THEME_NAME\"</span>]\n    ]\n}</span>", "class": "Code Code-json" });
     Markplus.register(25, { "tag": "span", "html": "<br>", "class": "Plain" });
     Markplus.register(26, { "tag": "span", "html": "Preset value of `THEME_NAME`:<br>", "class": "Plain" });
     Markplus.register(27, { "tag": "span", "html": "<span>light: https://highlightjs.org/static/demo/styles/github.css</span><br><span>night: https://highlightjs.org/static/demo/styles/vs2015.css</span><br>", "class": "Block" });
@@ -233,4 +396,4 @@
     Markplus.register(31, { "tag": "span", "html": "<br>", "class": "Plain" });
 });
 </script>
-<div id="markplus"></div><script>MarkplusPluginRenderHighlight.default(document.querySelector('#markplus'));</script>
+<div id="markplus"></div><script>markplusPluginRenderHighlight.default(document.querySelector('#markplus'));</script>
