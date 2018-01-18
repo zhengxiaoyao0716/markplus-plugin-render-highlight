@@ -26,8 +26,12 @@ const head = `
         overflow-x:auto;
         padding:16px;
     }
-    .Markplus .Code-full {
-        position: absolute;
+    .Markplus.full {
+        padding: 0;
+    }
+    .Markplus.full .Code {
+        height: 100%;
+        margin: 0;
     }
     .Markplus.hide {
         display: none;
@@ -47,10 +51,13 @@ const RenderHighlight = (self, theme = 'night') => {
         code: () => `(() => {
             const container = document.createElement('div');
             container.classList.add('Markplus');
+            container.classList.add('full');
 
             const highlight = ele => ele.querySelector('#full').addEventListener('click', () => {
                 const full = document.createElement('pre');
                 container.appendChild(full);
+
+                full.id = \`_full_\${ele.id}\`;
                 full.className = ele.className;
                 full.innerHTML = ele.innerHTML;
                 Array.from(full.querySelectorAll('.hljs')).forEach(hljs => hljs.setAttribute('contenteditable', true));
@@ -58,13 +65,15 @@ const RenderHighlight = (self, theme = 'night') => {
                     Markplus.container.classList.remove('hide');
                     container.remove();
                     ele.innerHTML = full.innerHTML;
+                    container.innerHTML = '';
                     Array.from(ele.querySelectorAll('.hljs')).forEach(hljs => hljs.removeAttribute('contenteditable'));
                     highlight(ele);
-                    container.innerHTML = '';
+                    location.hash = ele.id;
                 });
 
                 Markplus.container.classList.add('hide');
                 Markplus.container.parentElement.insertBefore(container, Markplus.container);
+                location.hash = full.id;
             });
             Markplus.decorators.push((ele, _, payload) => ele.classList.contains('Code') && highlight(ele));
         })();`,

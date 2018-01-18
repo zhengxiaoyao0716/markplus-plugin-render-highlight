@@ -1,9 +1,9 @@
 {
   "name": "markplus-plugin-render-highlight",
-  "version": "0.2.12",
+  "version": "0.2.13",
   "description": "Render codes with highlightjs.",
   "scripts": {
-    "start": "node ./../../bin/markplus ReadMe.mp -o index.html -c ./../../dev.config.js && start index.html"
+    "start": "cd ./../markplus && node ./bin/markplus ./../markplus-plugin-render-highlight/ReadMe.mp -o ./../markplus-plugin-render-highlight/index.html -c ./dev.config.js && start ./../markplus-plugin-render-highlight/index.html"
   },
   "repository": {
     "type": "git",
