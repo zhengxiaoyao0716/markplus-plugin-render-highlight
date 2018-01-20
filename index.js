@@ -47,7 +47,7 @@ const RenderHighlight = (self, theme = 'night') => {
     const { Code } = require(path.join(self.__dirname, 'Parser'));
     Object.defineProperty(Code.prototype, 'json', { get: json });
     return {
-        head: () => `<style>${head}${themes[theme] ? themes[theme]() : themes[theme]}</style>`,
+        head: () => `<style>${head}    ${themes[theme] ? themes[theme]() : themes[theme]}</style>`,
         code: () => `(() => {
             const container = document.createElement('div');
             container.classList.add('Markplus');
