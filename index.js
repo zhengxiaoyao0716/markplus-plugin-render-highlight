@@ -63,7 +63,7 @@ const RenderHighlight = (self, theme = 'night') => {
                 Array.from(full.querySelectorAll('.hljs')).forEach(hljs => hljs.setAttribute('contenteditable', true));
                 full.querySelector('#full').addEventListener('click', () => {
                     Markplus.container.classList.remove('hide');
-                    container.remove();
+                    container.parentElement.removeChild(container);
                     ele.innerHTML = full.innerHTML;
                     container.innerHTML = '';
                     Array.from(ele.querySelectorAll('.hljs')).forEach(hljs => hljs.removeAttribute('contenteditable'));
@@ -76,7 +76,7 @@ const RenderHighlight = (self, theme = 'night') => {
                 location.hash = full.id;
             });
             Markplus.decorators.push((ele, _, payload) => ele.classList.contains('Code') && highlight(ele));
-        })();`,
+        })();`.replace(/\n {8}/g, '\n'),
     };
 };
 exports.default = RenderHighlight;
