@@ -29,11 +29,12 @@ const head = `
     .Markplus.full {
         padding: 0;
     }
-    .Markplus.full .Code {
+    .Markplus.full .Code-full {
+        width: 100%;
         height: 100%;
         margin: 0;
     }
-    .Markplus.hide {
+    .Markplus.full>:not(.Code-full) {
         display: none;
     }
 `;
@@ -48,10 +49,9 @@ const RenderHighlight = (self, theme = 'night') => {
     Object.defineProperty(Code.prototype, 'json', { get: json });
     return {
         head: () => `<style>${head}    ${themes[theme] ? themes[theme]() : themes[theme]}</style>`,
-        code: () => `(() => {
+        code: () => `Markplus.process.push(mpContainer => {
             const container = document.createElement('div');
-            container.classList.add('Markplus');
-            container.classList.add('full');
+            container.classList.add('Code-full');
 
             const highlight = ele => ele.querySelector('#full').addEventListener('click', () => {
                 const full = document.createElement('pre');
@@ -59,10 +59,12 @@ const RenderHighlight = (self, theme = 'night') => {
 
                 full.id = \`_full_\${ele.id}\`;
                 full.className = ele.className;
+                full.classList.add('full');
                 full.innerHTML = ele.innerHTML;
                 Array.from(full.querySelectorAll('.hljs')).forEach(hljs => hljs.setAttribute('contenteditable', true));
                 full.querySelector('#full').addEventListener('click', () => {
-                    Markplus.container.classList.remove('hide');
+                    mpContainer.classList.remove('full');
+                    console.log(mpContainer.classList);
                     container.parentElement.removeChild(container);
                     ele.innerHTML = full.innerHTML;
                     container.innerHTML = '';
@@ -71,12 +73,12 @@ const RenderHighlight = (self, theme = 'night') => {
                     location.hash = ele.id;
                 });
 
-                Markplus.container.classList.add('hide');
-                Markplus.container.parentElement.insertBefore(container, Markplus.container);
+                mpContainer.classList.add('full');
+                mpContainer.appendChild(container);
                 location.hash = full.id;
             });
             Markplus.decorators.push((ele, _, payload) => ele.classList.contains('Code') && highlight(ele));
-        })();`.replace(/\n {8}/g, '\n'),
+        });`.replace(/\n {8}/g, '\n'),
     };
 };
 exports.default = RenderHighlight;
