@@ -2,7 +2,7 @@ const path = require('path');
 const hljs = require('highlight.js');
 
 const json = function () {
-    const code = this.lines.slice(1, this.size - 1).join('\n');
+    const code = this.code;
     const renderedLang = hljs.highlightAuto(code, [this.language]);
     const rendered = renderedLang.language ? renderedLang : hljs.highlightAuto(code);
     return { tag: 'pre', html: `<span id="full">◤</span><span class="hljs ${rendered.language}">${rendered.value}</span>`, class: `Code Code-${this.language}` };
