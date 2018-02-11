@@ -8,7 +8,7 @@ const json = function () {
     return {
         tag: 'pre',
         html: `<span id="full">◤</span><span class="hljs ${rendered.language}">${rendered.value}</span>`,
-        class: `Code Code-${this.language}`,
+        class: `Code Code-${this.language} raw-text`,
         'data-markplus-code-language': this.language,
         hljs: true,
     };
@@ -64,8 +64,8 @@ const RenderHighlight = (self, theme = 'night') => {
                     console.error('\\'markplus-plugin-render-highlight\\' failed to render code for \\'highlightjs\\' not found.');
                     return false;
                 }
-                const renderedLang = hljs.highlightAuto(ele.innerHTML, [payload['data-markplus-code-language']]);
-                const rendered = renderedLang.language ? renderedLang : hljs.highlightAuto(ele.innerHTML);
+                const renderedLang = hljs.highlightAuto(payload.code.raw, [payload['data-markplus-code-language']]);
+                const rendered = renderedLang.language ? renderedLang : hljs.highlightAuto(payload.code.raw);
                 ele.innerHTML = \`<span id="full">◤</span><span class="hljs \${rendered.language}">\${rendered.value}</span>\`;
                 return true;
             };

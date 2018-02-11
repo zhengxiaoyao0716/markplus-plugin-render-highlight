@@ -1,6 +1,6 @@
 {
   "name": "markplus-plugin-render-highlight",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Render codes with highlightjs.",
   "scripts": {
     "start": "cd ./../markplus && node ./bin/markplus ./../markplus-plugin-render-highlight/ReadMe.mp -o ./../markplus-plugin-render-highlight/index.html && start ./../markplus-plugin-render-highlight/index.html"
